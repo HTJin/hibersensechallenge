@@ -2,13 +2,16 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
-import { BrowserRouter } from 'react-router-dom'
+import { BrowserRouter } from 'react-router-dom';
+import Typography from '@material-ui/core/Typography';
 import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(
-  <BrowserRouter>
-    <App />
-  </BrowserRouter>,
+  <Typography>
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+  </Typography>,
   document.getElementById('root')
 );
 

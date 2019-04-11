@@ -1,3 +1,10 @@
 .desktopDisplay {
-    
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  fieldset {
+    border-width: 3px;
+    border-radius: 8px;
+  }
 }
