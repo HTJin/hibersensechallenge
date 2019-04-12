@@ -1,7 +1,10 @@
 import React, { Component } from 'react'
 
-import Avatar from '@material-ui/core/Avatar'
-import Chip from '@material-ui/core/Chip'
+import Fab from '@material-ui/core/Fab'
+
+import HouseIcon from '@material-ui/icons/HomeRounded'
+import AddIcon from '@material-ui/icons/AddRounded'
+import RoomIcon from '@material-ui/icons/MeetingRoomRounded'
 
 import './DesktopHome.css'
 
@@ -16,7 +19,17 @@ class DesktopHome extends Component {
         <h1>Welcome Home!</h1>
         <fieldset>
           <legend>My Rooms</legend>
-            
+            { this.state.rooms.length === 0 ?
+              <div className='addNew'>
+                <Fab variant='extended'>
+                  <HouseIcon className='empty' />Add a new room<AddIcon />
+                </Fab>
+              </div>
+            : 
+              <div>
+                <RoomIcon />
+              </div>
+            }
         </fieldset>
       </div>
     )
