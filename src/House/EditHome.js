@@ -6,7 +6,11 @@ class EditHome extends Component {
   }
 
   render() {
-
+    return (
+      <div>
+        
+      </div>
+    )
   }
 }
 

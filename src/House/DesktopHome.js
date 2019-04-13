@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 
 import Fab from '@material-ui/core/Fab'
+import TextField from '@material-ui/core/TextField'
 
 import HouseIcon from '@material-ui/icons/HomeRounded'
 import AddIcon from '@material-ui/icons/AddRounded'
@@ -10,7 +11,19 @@ import './DesktopHome.css'
 
 class DesktopHome extends Component {
   state = {
-    rooms: []
+    rooms: [],
+    editing: false
+  }
+
+  addRoom = () => {
+    this.setState({
+      editing: !this.state.editing
+    })
+  }
+
+  handleRoomName = (event) => {
+    event.preventDefault()
+    this.state.rooms.push(event.target.value)
   }
 
   render() {
@@ -19,15 +32,27 @@ class DesktopHome extends Component {
         <h1>Welcome Home!</h1>
         <fieldset>
           <legend>My Rooms</legend>
-            { this.state.rooms.length === 0 ?
+            { this.state.rooms.length === 0 && !this.state.editing ?
               <div className='addNew'>
-                <Fab variant='extended'>
+                <Fab variant='extended' onClick={this.addRoom}>
                   <HouseIcon className='empty' />Add a new room<AddIcon />
                 </Fab>
               </div>
-            : 
+            :
               <div>
-                <RoomIcon />
+                <div className='addNew'>
+                  <Fab variant='extended' onClick={this.addRoom}>
+                    <HouseIcon className='empty' />Add a new room<AddIcon />
+                  </Fab>
+                </div>
+                <form className='roomList' onSubmit={this.handleRoomName}>
+                  <RoomIcon />
+                  <TextField
+                    variant='outlined'
+                    label='Room Name'
+                    onChange={this.handleRoomName}
+                  />
+                </form>
               </div>
             }
         </fieldset>

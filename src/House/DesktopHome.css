@@ -6,5 +6,7 @@
   .desktopDisplay fieldset {
     border-width: 3px;
     border-radius: 8px; }
+    .desktopDisplay fieldset .roomList {
+      margin-top: 20px; }
     .desktopDisplay fieldset .empty {
       margin-right: 10px; }
