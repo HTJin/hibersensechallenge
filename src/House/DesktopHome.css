@@ -1,12 +1,24 @@
-.desktopDisplay {
+.desktop-display {
   display: flex;
   align-items: center;
   flex-direction: column;
   justify-content: center; }
-  .desktopDisplay fieldset {
+  .desktop-display fieldset {
     border-width: 3px;
-    border-radius: 8px; }
-    .desktopDisplay fieldset .roomList {
-      margin-top: 20px; }
-    .desktopDisplay fieldset .empty {
-      margin-right: 10px; }
+    border-radius: 8px;
+    padding-top: 20px; }
+    .desktop-display fieldset .room-list {
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+      justify-content: center;
+      margin-bottom: 20px; }
+  .desktop-display .add-new {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px; }
+  .desktop-display .house-icon {
+    margin-right: 10px; }
+  .desktop-display .func-icon {
+    margin-left: 10px; }

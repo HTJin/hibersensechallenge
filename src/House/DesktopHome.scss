@@ -1,4 +1,4 @@
-.desktopDisplay {
+.desktop-display {
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -6,11 +6,25 @@
   fieldset {
     border-width: 3px;
     border-radius: 8px;
-    .roomList {
-      margin-top: 20px;
+    padding-top: 20px;
+    .room-list {
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+      justify-content: center;
+      margin-bottom: 20px;
     }
-    .empty {
-      margin-right: 10px;
-    }
+  }
+  .add-new {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+  }
+  .house-icon {
+    margin-right: 10px;
+  }
+  .func-icon {
+    margin-left: 10px;
   }
 }
