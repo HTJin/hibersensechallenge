@@ -1,10 +1,6 @@
 import React, { Component } from 'react'
 
-class EditHome extends Component {
-  state = {
-    rooms: []
-  }
-
+class Room extends Component {
   render() {
     return (
       <div>
@@ -14,4 +10,4 @@ class EditHome extends Component {
   }
 }
 
-export default EditHome
+export default Room

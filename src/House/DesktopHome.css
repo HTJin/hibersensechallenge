@@ -13,6 +13,8 @@
       flex-direction: column;
       justify-content: center;
       margin-bottom: 20px; }
+      .desktop-display fieldset .room-list .edit-icon {
+        margin-left: 5px; }
   .desktop-display .add-new {
     display: flex;
     flex-direction: column;

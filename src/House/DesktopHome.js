@@ -18,8 +18,16 @@ class DesktopHome extends Component {
     rooms: [],
     name: '',
     adding: false,
+    editing: false,
     error: false,
-    helperText: 'Press Enter'
+    helperText: 'Press Enter',
+    roomEdit: '',
+    editIndex: 0
+  }
+
+  constructor(props) {
+    super(props)
+    this.toRoom = this.toRoom.bind(this)
   }
 
   addRoom = () => {
@@ -34,11 +42,24 @@ class DesktopHome extends Component {
     })
   }
 
+  resetError = () => {
+    this.setState({ error: false })
+    if (this.state.editing) {
+      this.setState({
+        helperText: 'Editing Room Name'
+      })
+    } else {
+      this.setState({
+        helperText: 'Press Enter'
+      })
+    }
+  }
+
   handleSubmit = event => {
     event.preventDefault()
     if (this.state.name === '') {
       this.setState({ error: true, helperText: 'Please type in a name' })
-      setTimeout(this.setState({ error: false, helperText: 'Press akljsdfl'}), 2000)
+      setTimeout(this.resetError, 2000)
     } else {
       this.state.rooms.push(this.state.name)
       this.setState({ name: '', error: false })
@@ -46,28 +67,45 @@ class DesktopHome extends Component {
     }
   }
 
-  handleEdit = room => {
+  handleEdit = room => () => {
     let index = this.state.rooms.indexOf(room)
-    if ( index > -1) {
-      this.state.rooms.splice(index, 1)
+    if (index > -1) {
+      this.setState({ editing: !this.state.editing, roomEdit: room, editIndex: index, helperText: 'Editing Room Name' })
     }
   }
 
+  handleEditSubmit = event => {
+    event.preventDefault()
+    if (this.state.name === '') {
+      this.setState({ error: true, helperText: 'Please type in a name' })
+      setTimeout(this.resetError, 2000)
+    } else {
+      this.state.rooms.splice(this.state.editIndex, 1, this.state.name)
+      this.setState({ rooms: this.state.rooms, editing: !this.state.editing, name: '', helperText: 'Press Enter' })
+    }
+  }
+
+  toRoom = room => () => {
+    let path = room
+    this.props.history.push(path)
+  }
+
   render() {
-    console.log(this.state.name, this.state.rooms)
     return (
       <div className='desktop-display'>
         <h1>Welcome Home!</h1>
         <fieldset>
           <legend>My Rooms</legend>
           { this.state.rooms.length > 0 ? 
-            this.state.rooms.map(room => {
+            this.state.rooms.map((room, index) => {
               return (
-                <div className='room-list'>
+                <div className='room-list' key={index}>
                   <Chip
                     avatar={<Avatar><RoomIcon /></Avatar>}
                     label={room}
-                    
+                    onClick={this.toRoom(room)}
+                    deleteIcon={<EditIcon className='edit-icon' />}
+                    onDelete={this.handleEdit(room)}
                   />
                 </div>
               )
@@ -75,7 +113,7 @@ class DesktopHome extends Component {
           : '' }
         </fieldset>
         
-        { this.state.adding ?
+        { this.state.adding  && !this.state.editing ?
           <div className='add-new'>
             <Fab variant='extended' onClick={this.addRoom}>
               Cancel<CancelIcon className='func-icon' />
@@ -93,7 +131,20 @@ class DesktopHome extends Component {
               />
             </form>
           </div>
-        : 
+        : !this.state.adding && this.state.editing ?
+            <form className='add-new' onSubmit={this.handleEditSubmit}>
+              <RoomIcon />
+              <TextField
+                autoFocus
+                variant='outlined'
+                label={this.state.roomEdit}
+                onChange={this.handleRoomName('name')}
+                value={this.state.name}
+                helperText={this.state.helperText}
+                error={this.state.error}
+              />
+            </form>
+        :
           <div className='add-new'>
             <Fab variant='extended' onClick={this.addRoom}>
               <HouseIcon className='house-icon' />Add a new room<AddIcon className='func-icon' />
