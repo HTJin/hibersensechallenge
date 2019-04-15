@@ -23,20 +23,19 @@ const theme = createMuiTheme({
 class DesktopHome extends Component {
   state = {
     rooms: [],
+    roomSelect: [],
+    roomTemp: [],
     name: '',
     adding: false,
     editing: false,
     error: false,
-    selected: false,
     helperText: 'Press Enter',
     roomEdit: '',
     editIndex: 0
   }
 
   addRoom = () => {
-    this.setState({
-      adding: !this.state.adding, name: ''
-    })
+    this.setState({ adding: !this.state.adding, name: '' })
   }
 
   resetState = () => {
@@ -67,9 +66,14 @@ class DesktopHome extends Component {
     event.preventDefault()
     if (this.state.name === '') {
       this.setState({ error: true, helperText: 'Please type in a name' })
-      setTimeout(this.resetError, 2000)
+      setTimeout(this.resetError, 1500)
+    } else if (this.state.rooms.indexOf(this.state.name) > -1) {
+      this.setState({ error: true, helperText: 'That room name already exists' })
+      setTimeout(this.resetError, 1500)
     } else {
       this.state.rooms.push(this.state.name)
+      this.state.roomTemp.push(this.roomTempGen())
+      this.state.roomSelect.push(false)
       this.setState({ name: '', error: false })
       this.addRoom()
     }
@@ -91,7 +95,10 @@ class DesktopHome extends Component {
     event.preventDefault()
     if (this.state.name === '') {
       this.setState({ error: true, helperText: 'Please type in a name' })
-      setTimeout(this.resetError, 2000)
+      setTimeout(this.resetError, 1500)
+    } else if (this.state.rooms.indexOf(this.state.name) > -1) {
+      this.setState({ error: true, helperText: 'That room name already exists' })
+      setTimeout(this.resetError, 1500)
     } else {
       this.state.rooms.splice(this.state.editIndex, 1, this.state.name)
       this.setState({
@@ -106,10 +113,17 @@ class DesktopHome extends Component {
   handleDelete = index => () => {
     this.state.rooms.splice(index, 1)
     this.setState({ rooms: this.state.rooms })
+    this.resetState()
   }
 
-  toRoom = () => {
-    this.setState({ selected: !this.state.selected })
+  toRoom = index => () => {
+    this.state.roomSelect.splice(index, 1, !this.state.roomSelect[index])
+    this.setState({ roomSelect: this.state.roomSelect })
+  }
+
+  roomTempGen = () => {
+    const temp = Math.floor(Math.random()*20)+60
+    return temp
   }
 
   render() {
@@ -123,13 +137,17 @@ class DesktopHome extends Component {
               this.state.rooms.map((room, index) => {
                 return (
                   <div className='room-list' key={index}>
-                    <RoomIcon className='room-icon' color={this.state.selected ? 'primary' : ''}/>
+                    <RoomIcon
+                      className='room-icon'
+                      color={this.state.roomSelect[index] ? 'primary' : ''}
+                      onClick={this.toRoom(index)}  
+                    />
                     <div>
                       <Chip
-                        avatar={<Avatar></Avatar>}
+                        avatar={<Avatar>{this.state.roomTemp[index]}°</Avatar>}
                         label={room}
                         variant='outlined'
-                        onClick={this.toRoom}
+                        onClick={this.toRoom(index)}
                         deleteIcon={<EditIcon className='edit-icon' />}
                         onDelete={(this.state.adding && !this.state.editing) || (!this.state.adding && this.state.editing) ? this.resetState : this.handleEdit(room)}
                       />

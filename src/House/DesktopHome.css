@@ -22,13 +22,14 @@
       margin-bottom: 20px;
       animation: Chips .2s ease-in-out; }
       .desktop-display .filled .room-list .room-icon {
+        cursor: pointer;
         margin-right: 30px; }
       .desktop-display .filled .room-list .edit-icon {
         margin-left: 5px; }
       .desktop-display .filled .room-list .delete-icon {
+        cursor: pointer;
         margin-left: 10px;
-        margin-bottom: -10px;
-        cursor: pointer; }
+        margin-bottom: -10px; }
       .desktop-display .filled .room-list .delete-icon:hover {
         color: #E73C7E; }
 

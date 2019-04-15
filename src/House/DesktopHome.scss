@@ -22,12 +22,15 @@
       justify-content: center;
       margin-bottom: 20px;
       animation: Chips .2s ease-in-out;
-      .room-icon { margin-right: 30px; }
+      .room-icon {
+        cursor: pointer;
+        margin-right: 30px;
+      }
       .edit-icon { margin-left: 5px; }
       .delete-icon {
+        cursor: pointer;
         margin-left: 10px;
         margin-bottom: -10px;
-        cursor: pointer;
       }
       .delete-icon:hover { color: #E73C7E; }
     }
