@@ -2,25 +2,60 @@
   display: flex;
   align-items: center;
   flex-direction: column;
-  justify-content: center; }
-  .desktop-display fieldset {
+  justify-content: center;
+  color: #fff; }
+  .desktop-display .empty {
     border-width: 3px;
     border-radius: 8px;
-    padding-top: 20px; }
-    .desktop-display fieldset .room-list {
+    border: dotted; }
+  .desktop-display .filled {
+    border-width: 3px;
+    border-radius: 8px;
+    padding-top: 20px;
+    color: #fff;
+    border: double #5BBD75; }
+    .desktop-display .filled .room-list {
       display: flex;
       align-items: center;
       flex-direction: column;
       justify-content: center;
-      margin-bottom: 20px; }
-      .desktop-display fieldset .room-list .edit-icon {
+      margin-bottom: 20px;
+      animation: Chips .2s ease-in-out; }
+      .desktop-display .filled .room-list .room-icon {
+        margin-right: 30px; }
+      .desktop-display .filled .room-list .edit-icon {
         margin-left: 5px; }
+      .desktop-display .filled .room-list .delete-icon {
+        margin-left: 10px;
+        margin-bottom: -10px;
+        cursor: pointer; }
+      .desktop-display .filled .room-list .delete-icon:hover {
+        color: #E73C7E; }
+
+@keyframes Chips {
+  0% {
+    transform: scale(0); }
+  100% {
+    transform: scale(1); } }
   .desktop-display .add-new {
     display: flex;
     flex-direction: column;
     align-items: center;
     margin-top: 20px; }
-  .desktop-display .house-icon {
-    margin-right: 10px; }
-  .desktop-display .func-icon {
-    margin-left: 10px; }
+    .desktop-display .add-new .add-button {
+      background: linear-gradient(-45deg, #EE7752, #E73C7E, #23A6D5, #23D5AB);
+      background-size: 400% 400%;
+      animation: Gradient 10s ease infinite;
+      color: #fff; }
+
+@keyframes Gradient {
+  0% {
+    background-position: 0% 50%; }
+  50% {
+    background-position: 100% 50%; }
+  100% {
+    background-position: 0% 50%; } }
+    .desktop-display .add-new .house-icon {
+      margin-right: 10px; }
+    .desktop-display .add-new .func-icon {
+      margin-left: 10px; }

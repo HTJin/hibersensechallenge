@@ -3,19 +3,37 @@
   align-items: center;
   flex-direction: column;
   justify-content: center;
-  fieldset {
+  color: #fff;
+  .empty {
+    border-width: 3px;
+    border-radius: 8px;
+    border: dotted;
+  }
+  .filled {
     border-width: 3px;
     border-radius: 8px;
     padding-top: 20px;
+    color: #fff;
+    border: double #5BBD75;
     .room-list {
       display: flex;
       align-items: center;
       flex-direction: column;
       justify-content: center;
       margin-bottom: 20px;
-      .edit-icon {
-        margin-left: 5px;
+      animation: Chips .2s ease-in-out;
+      .room-icon { margin-right: 30px; }
+      .edit-icon { margin-left: 5px; }
+      .delete-icon {
+        margin-left: 10px;
+        margin-bottom: -10px;
+        cursor: pointer;
       }
+      .delete-icon:hover { color: #E73C7E; }
+    }
+    @keyframes Chips {
+      0% { transform: scale(0); }
+      100% { transform: scale(1); }
     }
   }
   .add-new {
@@ -23,11 +41,18 @@
     flex-direction: column;
     align-items: center;
     margin-top: 20px;
-  }
-  .house-icon {
-    margin-right: 10px;
-  }
-  .func-icon {
-    margin-left: 10px;
+    .add-button {
+      background: linear-gradient(-45deg, #EE7752, #E73C7E, #23A6D5, #23D5AB);
+      background-size: 400% 400%;
+      animation: Gradient 10s ease infinite;
+      color: #fff;
+    }
+    @keyframes Gradient {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    .house-icon { margin-right: 10px; }
+    .func-icon { margin-left: 10px; }
   }
 }

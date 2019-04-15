@@ -8,11 +8,18 @@ import TextField from '@material-ui/core/TextField'
 import AddIcon from '@material-ui/icons/AddRounded'
 import EditIcon from '@material-ui/icons/Edit'
 import HouseIcon from '@material-ui/icons/HomeRounded'
-import CancelIcon from '@material-ui/icons/Clear'
+import CancelIcon from '@material-ui/icons/ClearRounded'
 import RoomIcon from '@material-ui/icons/MeetingRoomRounded'
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles'
 
 import './DesktopHome.css'
 
+const theme = createMuiTheme({
+  palette: {
+    type: 'dark',
+    primary: { main: '#5BBD75' }
+  }
+})
 class DesktopHome extends Component {
   state = {
     rooms: [],
@@ -20,38 +27,39 @@ class DesktopHome extends Component {
     adding: false,
     editing: false,
     error: false,
+    selected: false,
     helperText: 'Press Enter',
     roomEdit: '',
     editIndex: 0
   }
 
-  constructor(props) {
-    super(props)
-    this.toRoom = this.toRoom.bind(this)
-  }
-
   addRoom = () => {
     this.setState({
-      adding: !this.state.adding
+      adding: !this.state.adding, name: ''
+    })
+  }
+
+  resetState = () => {
+    this.setState({
+      name: '',
+      adding: false,
+      editing: false,
+      helperText: 'Press Enter',
+      roomEdit: '',
+      editIndex: 0
     })
   }
 
   handleRoomName = name => event => {
-    this.setState({
-      [name]: event.target.value
-    })
+    this.setState({ [name]: event.target.value })
   }
 
   resetError = () => {
     this.setState({ error: false })
     if (this.state.editing) {
-      this.setState({
-        helperText: 'Editing Room Name'
-      })
+      this.setState({ helperText: 'Editing Room Name' })
     } else {
-      this.setState({
-        helperText: 'Press Enter'
-      })
+      this.setState({ helperText: 'Press Enter' })
     }
   }
 
@@ -70,7 +78,12 @@ class DesktopHome extends Component {
   handleEdit = room => () => {
     let index = this.state.rooms.indexOf(room)
     if (index > -1) {
-      this.setState({ editing: !this.state.editing, roomEdit: room, editIndex: index, helperText: 'Editing Room Name' })
+      this.setState({
+        editing: !this.state.editing,
+        roomEdit: room,
+        editIndex: index,
+        helperText: 'Editing Room Name'
+      })
     }
   }
 
@@ -81,77 +94,98 @@ class DesktopHome extends Component {
       setTimeout(this.resetError, 2000)
     } else {
       this.state.rooms.splice(this.state.editIndex, 1, this.state.name)
-      this.setState({ rooms: this.state.rooms, editing: !this.state.editing, name: '', helperText: 'Press Enter' })
+      this.setState({
+        rooms: this.state.rooms,
+        editing: !this.state.editing,
+        name: '',
+        helperText: 'Press Enter'
+      })
     }
   }
 
-  toRoom = room => () => {
-    let path = room
-    this.props.history.push(path)
+  handleDelete = index => () => {
+    this.state.rooms.splice(index, 1)
+    this.setState({ rooms: this.state.rooms })
+  }
+
+  toRoom = () => {
+    this.setState({ selected: !this.state.selected })
   }
 
   render() {
     return (
-      <div className='desktop-display'>
-        <h1>Welcome Home!</h1>
-        <fieldset>
-          <legend>My Rooms</legend>
-          { this.state.rooms.length > 0 ? 
-            this.state.rooms.map((room, index) => {
-              return (
-                <div className='room-list' key={index}>
-                  <Chip
-                    avatar={<Avatar><RoomIcon /></Avatar>}
-                    label={room}
-                    onClick={this.toRoom(room)}
-                    deleteIcon={<EditIcon className='edit-icon' />}
-                    onDelete={this.handleEdit(room)}
-                  />
-                </div>
-              )
-            })
-          : '' }
-        </fieldset>
-        
-        { this.state.adding  && !this.state.editing ?
-          <div className='add-new'>
-            <Fab variant='extended' onClick={this.addRoom}>
-              Cancel<CancelIcon className='func-icon' />
-            </Fab>
-            <form className='add-new' onSubmit={this.handleSubmit}>
-              <RoomIcon />
-              <TextField
-                autoFocus
-                variant='outlined'
-                label='Room Name'
-                onChange={this.handleRoomName('name')}
-                value={this.state.name}
-                helperText={this.state.helperText}
-                error={this.state.error}
-              />
-            </form>
-          </div>
-        : !this.state.adding && this.state.editing ?
-            <form className='add-new' onSubmit={this.handleEditSubmit}>
-              <RoomIcon />
-              <TextField
-                autoFocus
-                variant='outlined'
-                label={this.state.roomEdit}
-                onChange={this.handleRoomName('name')}
-                value={this.state.name}
-                helperText={this.state.helperText}
-                error={this.state.error}
-              />
-            </form>
-        :
-          <div className='add-new'>
-            <Fab variant='extended' onClick={this.addRoom}>
-              <HouseIcon className='house-icon' />Add a new room<AddIcon className='func-icon' />
-            </Fab>
-          </div>
-        }
-      </div>
+      <MuiThemeProvider theme={theme}>
+        <div className='desktop-display'>
+          <h1>Welcome Home!</h1>
+          <fieldset className={this.state.rooms.length === 0 ? 'empty' : 'filled'}>
+            <legend>My Rooms</legend>
+            { this.state.rooms.length > 0 ? 
+              this.state.rooms.map((room, index) => {
+                return (
+                  <div className='room-list' key={index}>
+                    <RoomIcon className='room-icon' color={this.state.selected ? 'primary' : ''}/>
+                    <div>
+                      <Chip
+                        avatar={<Avatar></Avatar>}
+                        label={room}
+                        variant='outlined'
+                        onClick={this.toRoom}
+                        deleteIcon={<EditIcon className='edit-icon' />}
+                        onDelete={(this.state.adding && !this.state.editing) || (!this.state.adding && this.state.editing) ? this.resetState : this.handleEdit(room)}
+                      />
+                      <CancelIcon className='delete-icon' onClick={this.handleDelete(index)} />
+                    </div>
+                  </div>
+                )
+              })
+              : <div><p>Click below to add a room</p></div> }
+          </fieldset>
+          
+          { this.state.adding  && !this.state.editing ?
+            <div className='add-new'>
+              <Fab className='add-button' variant='extended' onClick={this.addRoom}>
+                Cancel<CancelIcon className='func-icon' />
+              </Fab>
+              <form className='add-new' onSubmit={this.handleSubmit}>
+                <RoomIcon />
+                <TextField
+                  autoFocus
+                  variant='outlined'
+                  label='Room Name'
+                  onChange={this.handleRoomName('name')}
+                  value={this.state.name}
+                  helperText={this.state.helperText}
+                  error={this.state.error}
+                />
+              </form>
+            </div>
+          : !this.state.adding && this.state.editing ?
+            <div className='add-new'>
+              <Fab className='add-button' variant='extended' onClick={this.resetState}>
+                Cancel<CancelIcon className='func-icon' />
+              </Fab>
+              <form className='add-new' onSubmit={this.handleEditSubmit}>
+                <RoomIcon />
+                <TextField
+                  autoFocus
+                  variant='outlined'
+                  label={this.state.roomEdit}
+                  onChange={this.handleRoomName('name')}
+                  value={this.state.name}
+                  helperText={this.state.helperText}
+                  error={this.state.error}
+                />
+              </form>
+            </div>
+          :
+            <div className='add-new'>
+              <Fab className='add-button' variant='extended' onClick={this.addRoom}>
+                <HouseIcon className='house-icon' />Add a new room<AddIcon className='func-icon' />
+              </Fab>
+            </div>
+          }
+        </div>
+      </MuiThemeProvider>
     )
   }
 }
