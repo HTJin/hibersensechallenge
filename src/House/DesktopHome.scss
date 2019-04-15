@@ -1,61 +1,89 @@
 .desktop-display {
   display: flex;
-  align-items: center;
-  flex-direction: column;
-  justify-content: center;
-  color: #fff;
-  .empty {
-    border-width: 3px;
-    border-radius: 8px;
-    border: dotted;
-  }
-  .filled {
-    border-width: 3px;
-    border-radius: 8px;
-    padding-top: 20px;
-    color: #fff;
-    border: double #5BBD75;
-    .room-list {
-      display: flex;
-      align-items: center;
-      flex-direction: column;
-      justify-content: center;
-      margin-bottom: 20px;
-      animation: Chips .2s ease-in-out;
-      .room-icon {
-        cursor: pointer;
-        margin-right: 30px;
-      }
-      .edit-icon { margin-left: 5px; }
-      .delete-icon {
-        cursor: pointer;
-        margin-left: 10px;
-        margin-bottom: -10px;
-      }
-      .delete-icon:hover { color: #E73C7E; }
-    }
-    @keyframes Chips {
-      0% { transform: scale(0); }
-      100% { transform: scale(1); }
-    }
-  }
-  .add-new {
+  justify-content: space-around;
+  .room-display {
     display: flex;
-    flex-direction: column;
     align-items: center;
-    margin-top: 20px;
-    .add-button {
-      background: linear-gradient(-45deg, #EE7752, #E73C7E, #23A6D5, #23D5AB);
-      background-size: 400% 400%;
-      animation: Gradient 10s ease infinite;
+    flex-direction: column;
+    justify-content: center;
+    color: #fff;
+    width: 50vw;
+    .empty {
+      border-width: 3px;
+      border-radius: 8px;
+      border: dotted;
+    }
+    .filled {
+      border-width: 3px;
+      border-radius: 8px;
+      padding-top: 20px;
       color: #fff;
+      border: double #5BBD75;
+      .room-list {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        justify-content: center;
+        margin-bottom: 20px;
+        animation: Chips .2s ease-in-out;
+        .room-icon {
+          cursor: pointer;
+          margin-right: 30px;
+        }
+        .warm { background: #EE7752; color: #fff; }
+        .cool { background: #23A6D5; color: #fff; }
+        .match { background: #5BBD75; color: #fff; }
+        .edit-icon { margin-left: 5px; }
+        .delete-icon {
+          cursor: pointer;
+          margin-left: 10px;
+          margin-bottom: -10px;
+        }
+        .delete-icon:hover { color: #E73C7E; }
+      }
+      @keyframes Chips {
+        0% { transform: scale(0); }
+        100% { transform: scale(1); }
+      }
+    }
+    .add-new {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 20px;
+      .add-button {
+        background: linear-gradient(-45deg, #EE7752, #E73C7E, #23A6D5, #23D5AB);
+        background-size: 400% 400%;
+        animation: Gradient 10s ease infinite;
+        color: #fff;
+      }
+      @keyframes Gradient {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+      }
+      .house-icon { margin-right: 10px; }
+      .func-icon { margin-left: 10px; }
+    }
+  }
+  .data-display {
+    display: flex;
+    justify-content: center;
+    margin-top: 10vh;
+    .temperature {
+      border: thick double #5BBD75;
+      width: 100px;
+      height: 100px;
+      font-size: 50px;
+      color: #fff;
+      background: radial-gradient(#23D5AB, #5BBD75);
+      background-size: 400% 400%;      
+      animation: Gradient 5s ease infinite;      
     }
     @keyframes Gradient {
       0% { background-position: 0% 50%; }
       50% { background-position: 100% 50%; }
       100% { background-position: 0% 50%; }
     }
-    .house-icon { margin-right: 10px; }
-    .func-icon { margin-left: 10px; }
   }
 }
