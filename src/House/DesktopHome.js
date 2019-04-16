@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { ChartDisplay } from '../Charts/DataCharts'
 
 import Avatar from '@material-ui/core/Avatar'
 import Chip from '@material-ui/core/Chip'
@@ -39,11 +40,13 @@ const theme = createMuiTheme({
     }
   }
 })
+
 class DesktopHome extends Component {
   state = {
     rooms: [],
     roomSelect: [],
     roomTemp: [],
+    energy: [],
     name: '',
     adding: false,
     editing: false,
@@ -51,7 +54,8 @@ class DesktopHome extends Component {
     helperText: 'Press Enter',
     roomEdit: '',
     editIndex: 0,
-    houseTemp: 67
+    houseTemp: 67,
+    houseEnergy: 0
   }
 
   addRoom = () => {
@@ -92,9 +96,14 @@ class DesktopHome extends Component {
       setTimeout(this.resetError, 1500)
     } else {
       this.state.rooms.push(this.state.name)
-      this.state.roomTemp.push(this.roomTempGen())
+      this.state.roomTemp.push(this.dataGen('temp'))
       this.state.roomSelect.push(false)
-      this.setState({ name: '', error: false })
+      this.state.energy.push(this.dataGen('energy'))
+      this.setState({
+        name: '',
+        error: false,
+        houseEnergy: this.state.houseEnergy + this.state.energy[this.state.energy.length-1]
+      })
       this.addRoom()
     }
   }
@@ -132,7 +141,13 @@ class DesktopHome extends Component {
 
   handleDelete = index => () => {
     this.state.rooms.splice(index, 1)
-    this.setState({ rooms: this.state.rooms })
+    this.state.roomTemp.splice(index, 1)
+    this.state.energy.splice(index, 1)
+    this.setState({
+      rooms: this.state.rooms,
+      roomTemp: this.state.roomTemp,
+      energy: this.state.energy
+    })
     this.handleCancel()
   }
 
@@ -141,16 +156,20 @@ class DesktopHome extends Component {
     this.setState({ roomSelect: this.state.roomSelect })
   }
 
-  roomTempGen = () => {
-    const temp = Math.floor(Math.random()*20)+60
-    return temp
+  dataGen = dataType => {
+    if (dataType === 'temp') { return Math.floor((Math.random()*20)+60) }
+    if (dataType === 'energy') { return Math.floor((Math.random()*3000)+1000) }
   }
 
-  handleTarget = change => () => {
-    if (change === 'up') {
-      this.setState({ houseTemp: this.state.houseTemp + 1 })
-    } else {
-      this.setState({ houseTemp: this.state.houseTemp - 1 })      
+  handleHouseTemp = change => () => {
+    if (change === 'up') { this.setState({ houseTemp: this.state.houseTemp + 1 }) }
+    if (change === 'down') { this.setState({ houseTemp: this.state.houseTemp - 1 }) }
+  }
+
+  handleHouseEnergy = () => {
+    const reducer = (a, b) => a + b
+    if (this.state.energy.length > 0) {
+      this.setState({ houseEnergy: this.state.energy.reduce(reducer)/1000 })
     }
   }
 
@@ -197,7 +216,6 @@ class DesktopHome extends Component {
                 })
                 : <div><p>Click below to add a room</p></div> }
             </fieldset>
-            
             { this.state.adding  && !this.state.editing ?
               <div className='add-new'>
                 <Fab className='add-button' variant='extended' onClick={this.addRoom}>
@@ -242,26 +260,31 @@ class DesktopHome extends Component {
               </div>
             }
           </div>
+          <div className='chart-display'>
+            <ChartDisplay labels={this.state.rooms} data={this.state.energy} />
+          </div>
           <div className='data-display'>
             <div className='temp-display'>
               <div>
-                <Tooltip title='Target Temperature' placement='bottom-end'>
+                <Tooltip title='Target Temperature' placement='bottom'>
                   <Avatar className='temperature'>{this.state.houseTemp}°</Avatar>
                 </Tooltip>
               </div>
               <div className='temp-control'>
                 <Tooltip title='+ 1' placement='right'>
-                  <IconButton color='primary' onClick={this.handleTarget('up')}><ArrowUp /></IconButton>
+                  <IconButton color='primary' onClick={this.handleHouseTemp('up')}><ArrowUp /></IconButton>
                 </Tooltip>
                 <Tooltip title='- 1' placement='right'>              
-                  <IconButton color='secondary' onClick={this.handleTarget('down')}><ArrowDown /></IconButton>
+                  <IconButton color='secondary' onClick={this.handleHouseTemp('down')}><ArrowDown /></IconButton>
                 </Tooltip>
               </div>
             </div>
             <div className='energy-display'>
-                <div className='energy-button'>
-                  <PowerIcon className='energy-icon' />7.2 kWh<BoltIcon className='energy-icon' />
-                </div>
+              <div className='energy-button'>
+                <Tooltip title="Today's Total Usage" placement='bottom'>
+                  <div><PowerIcon className='energy-icon' />{this.state.energy.length > 0 ? (this.state.houseEnergy/1000).toFixed(3) : 'N/A'} kWh<BoltIcon className='energy-icon' /></div>
+                </Tooltip>
+              </div>
             </div>
           </div>
         </div>

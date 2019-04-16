@@ -103,16 +103,32 @@
         display: flex;
         flex-direction: column;
         margin-top: 5px; }
+    .desktop-display .data-display .chart-display {
+      background: #1A2126;
+      color: #fff; }
     .desktop-display .data-display .energy-display {
       margin-top: 30vh;
       margin-left: -10px;
-      width: 125px;
-      color: #fff;
-      border: 2px solid #b077bc;
       border-radius: 8px;
       text-align: center;
-      padding: 10px;
-      font-size: 20px; }
+      padding: 2px;
+      font-size: 20px;
+      background: linear-gradient(-45deg, #b077bc, #810080, #b077bc);
+      background-size: 400% 400%;
+      animation: Gradient 5s ease infinite; }
       .desktop-display .data-display .energy-display .energy-icon {
-        margin-bottom: -7px;
+        margin-bottom: -4px;
         color: #b077bc; }
+
+@keyframes Gradient {
+  0% {
+    background-position: 0% 50%; }
+  50% {
+    background-position: 100% 50%; }
+  100% {
+    background-position: 0% 50%; } }
+    .desktop-display .data-display .energy-button {
+      color: #fff;
+      background: #1A2126;
+      border-radius: 9px;
+      padding: 10px; }

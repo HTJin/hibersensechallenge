@@ -11,4 +11,4 @@
 ### Frameworks Used
 ##### React
 ##### Material-UI
-##### canvasJS
+##### Chart.js
