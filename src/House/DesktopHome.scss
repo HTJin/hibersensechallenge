@@ -96,6 +96,17 @@
         margin-top: 5px;
       }
     }
-    .energy-display { margin-top: 30vh; }
+    .energy-display {
+      margin-top: 30vh;
+      margin-left: -10px;
+      width: 125px;
+      color: #fff;
+      border: 2px solid #b077bc;
+      border-radius: 8px;
+      text-align: center;
+      padding: 10px;
+      font-size: 20px;
+      .energy-icon { margin-bottom: -7px; color: #b077bc; }
+    }
   }
 }

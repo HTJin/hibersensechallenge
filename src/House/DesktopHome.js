@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 
 import Avatar from '@material-ui/core/Avatar'
-import Button from '@material-ui/core/Button'
 import Chip from '@material-ui/core/Chip'
 import Fab from '@material-ui/core/Fab'
 import TextField from '@material-ui/core/TextField'
@@ -260,9 +259,9 @@ class DesktopHome extends Component {
               </div>
             </div>
             <div className='energy-display'>
-              <Button>
-                <PowerIcon /><BoltIcon />
-              </Button>
+                <div className='energy-button'>
+                  <PowerIcon className='energy-icon' />7.2 kWh<BoltIcon className='energy-icon' />
+                </div>
             </div>
           </div>
         </div>
