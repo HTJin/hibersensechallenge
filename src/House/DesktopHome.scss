@@ -72,27 +72,30 @@
     display: flex;
     justify-content: center;
     margin-top: 10vh;
-    .temperature {
-      border: thick double #5BBD75;
-      width: 100px;
-      height: 100px;
-      font-size: 55px;
-      color: #fff;
-      background: radial-gradient(#23D5AB, #5BBD75);
-      background-size: 400% 400%;      
-      animation: Gradient 5s ease infinite;      
-    }
-    @keyframes Gradient {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
-    .temp-control {
+    flex-direction: column;
+    .temp-display {
       display: flex;
-      flex-direction: column;
-      margin-top: 5px;
-      .hot { background: #EE7752; }
-      .cold { background: #23A6D5; }
+      .temperature {
+        border: thick double #5BBD75;
+        width: 100px;
+        height: 100px;
+        font-size: 55px;
+        color: #fff;
+        background: radial-gradient(#23D5AB, #5BBD75);
+        background-size: 400% 400%;      
+        animation: Gradient 5s ease infinite;      
+      }
+      @keyframes Gradient {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+      }
+      .temp-control {
+        display: flex;
+        flex-direction: column;
+        margin-top: 5px;
+      }
     }
+    .energy-display { margin-top: 30vh; }
   }
 }

@@ -244,18 +244,20 @@ class DesktopHome extends Component {
             }
           </div>
           <div className='data-display'>
-            <div>
-              <Tooltip title='Target Temperature' placement='bottom-end'>
-                <Avatar className='temperature'>{this.state.houseTemp}°</Avatar>
-              </Tooltip>
-            </div>
-            <div className='temp-control'>
-              <Tooltip title='+ 1' placement='right'>
-                <IconButton color='primary' onClick={this.handleTarget('up')}><ArrowUp /></IconButton>
-              </Tooltip>
-              <Tooltip title='- 1' placement='right'>              
-                <IconButton color='secondary' onClick={this.handleTarget('down')}><ArrowDown /></IconButton>
-              </Tooltip>
+            <div className='temp-display'>
+              <div>
+                <Tooltip title='Target Temperature' placement='bottom-end'>
+                  <Avatar className='temperature'>{this.state.houseTemp}°</Avatar>
+                </Tooltip>
+              </div>
+              <div className='temp-control'>
+                <Tooltip title='+ 1' placement='right'>
+                  <IconButton color='primary' onClick={this.handleTarget('up')}><ArrowUp /></IconButton>
+                </Tooltip>
+                <Tooltip title='- 1' placement='right'>              
+                  <IconButton color='secondary' onClick={this.handleTarget('down')}><ArrowDown /></IconButton>
+                </Tooltip>
+              </div>
             </div>
             <div className='energy-display'>
               <Button>

@@ -78,16 +78,19 @@
   .desktop-display .data-display {
     display: flex;
     justify-content: center;
-    margin-top: 10vh; }
-    .desktop-display .data-display .temperature {
-      border: thick double #5BBD75;
-      width: 100px;
-      height: 100px;
-      font-size: 55px;
-      color: #fff;
-      background: radial-gradient(#23D5AB, #5BBD75);
-      background-size: 400% 400%;
-      animation: Gradient 5s ease infinite; }
+    margin-top: 10vh;
+    flex-direction: column; }
+    .desktop-display .data-display .temp-display {
+      display: flex; }
+      .desktop-display .data-display .temp-display .temperature {
+        border: thick double #5BBD75;
+        width: 100px;
+        height: 100px;
+        font-size: 55px;
+        color: #fff;
+        background: radial-gradient(#23D5AB, #5BBD75);
+        background-size: 400% 400%;
+        animation: Gradient 5s ease infinite; }
 
 @keyframes Gradient {
   0% {
@@ -96,11 +99,9 @@
     background-position: 100% 50%; }
   100% {
     background-position: 0% 50%; } }
-    .desktop-display .data-display .temp-control {
-      display: flex;
-      flex-direction: column;
-      margin-top: 5px; }
-      .desktop-display .data-display .temp-control .hot {
-        background: #EE7752; }
-      .desktop-display .data-display .temp-control .cold {
-        background: #23A6D5; }
+      .desktop-display .data-display .temp-display .temp-control {
+        display: flex;
+        flex-direction: column;
+        margin-top: 5px; }
+    .desktop-display .data-display .energy-display {
+      margin-top: 30vh; }
