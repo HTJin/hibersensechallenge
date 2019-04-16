@@ -1,17 +1,24 @@
 import React, { Component } from 'react'
 
 import Avatar from '@material-ui/core/Avatar'
+import Button from '@material-ui/core/Button'
 import Chip from '@material-ui/core/Chip'
 import Fab from '@material-ui/core/Fab'
 import TextField from '@material-ui/core/TextField'
+import IconButton from '@material-ui/core/IconButton'
+import Tooltip from '@material-ui/core/Tooltip'
 
 import AddIcon from '@material-ui/icons/AddRounded'
-import EditIcon from '@material-ui/icons/Edit'
-import HouseIcon from '@material-ui/icons/HomeRounded'
+import ArrowUp from '@material-ui/icons/ArrowDropUpRounded'
+import BoltIcon from '@material-ui/icons/FlashOnRounded'
+import ArrowDown from '@material-ui/icons/ArrowDropDownRounded'
 import CancelIcon from '@material-ui/icons/ClearRounded'
+import EditIcon from '@material-ui/icons/EditRounded'
+import HouseIcon from '@material-ui/icons/HomeRounded'
+import PowerIcon from '@material-ui/icons/PowerRounded'
 import RoomIcon from '@material-ui/icons/MeetingRoomRounded'
-import Tooltip from '@material-ui/core/Tooltip'
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles'
+import { fade } from '@material-ui/core/styles/colorManipulator'
 
 import './DesktopHome.css'
 
@@ -19,6 +26,18 @@ const theme = createMuiTheme({
   palette: {
     type: 'dark',
     primary: { main: '#5BBD75' }
+  },
+  overrides: {
+    MuiIconButton: {
+      colorPrimary: {
+        color: '#EE7752',
+        '&:hover': { backgroundColor: fade('#EE7752', 0.1) }
+      },
+      colorSecondary: {
+        color: '#23A6D5',
+        '&:hover': { backgroundColor: fade('#23A6D5', 0.1) }        
+      }
+    }
   }
 })
 class DesktopHome extends Component {
@@ -128,6 +147,14 @@ class DesktopHome extends Component {
     return temp
   }
 
+  handleTarget = change => () => {
+    if (change === 'up') {
+      this.setState({ houseTemp: this.state.houseTemp + 1 })
+    } else {
+      this.setState({ houseTemp: this.state.houseTemp - 1 })      
+    }
+  }
+
   render() {
     return (
       <MuiThemeProvider theme={theme}>
@@ -217,9 +244,24 @@ class DesktopHome extends Component {
             }
           </div>
           <div className='data-display'>
-            <Tooltip title='Target Temperature' placement='bottom-end'>
-              <Avatar className='temperature'>{this.state.houseTemp}°</Avatar>
-            </Tooltip>
+            <div>
+              <Tooltip title='Target Temperature' placement='bottom-end'>
+                <Avatar className='temperature'>{this.state.houseTemp}°</Avatar>
+              </Tooltip>
+            </div>
+            <div className='temp-control'>
+              <Tooltip title='+ 1' placement='right'>
+                <IconButton color='primary' onClick={this.handleTarget('up')}><ArrowUp /></IconButton>
+              </Tooltip>
+              <Tooltip title='- 1' placement='right'>              
+                <IconButton color='secondary' onClick={this.handleTarget('down')}><ArrowDown /></IconButton>
+              </Tooltip>
+            </div>
+            <div className='energy-display'>
+              <Button>
+                <PowerIcon /><BoltIcon />
+              </Button>
+            </div>
           </div>
         </div>
       </MuiThemeProvider>

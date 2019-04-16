@@ -11,13 +11,15 @@
     .desktop-display .room-display .empty {
       border-width: 3px;
       border-radius: 8px;
-      border: dotted; }
+      border: dotted;
+      background: #1A2126; }
     .desktop-display .room-display .filled {
       border-width: 3px;
       border-radius: 8px;
       padding-top: 20px;
       color: #fff;
-      border: double #5BBD75; }
+      border: double #5BBD75;
+      background: #1A2126; }
       .desktop-display .room-display .filled .room-list {
         display: flex;
         align-items: center;
@@ -81,7 +83,7 @@
       border: thick double #5BBD75;
       width: 100px;
       height: 100px;
-      font-size: 50px;
+      font-size: 55px;
       color: #fff;
       background: radial-gradient(#23D5AB, #5BBD75);
       background-size: 400% 400%;
@@ -94,3 +96,11 @@
     background-position: 100% 50%; }
   100% {
     background-position: 0% 50%; } }
+    .desktop-display .data-display .temp-control {
+      display: flex;
+      flex-direction: column;
+      margin-top: 5px; }
+      .desktop-display .data-display .temp-control .hot {
+        background: #EE7752; }
+      .desktop-display .data-display .temp-control .cold {
+        background: #23A6D5; }
