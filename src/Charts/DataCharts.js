@@ -2,6 +2,8 @@ import React from 'react'
 
 import { HorizontalBar } from 'react-chartjs-2'
 
+import './DataCharts.css'
+
 export const ChartDisplay = (props) => {
   const kilo = []
   for (const watts of props.data) {
